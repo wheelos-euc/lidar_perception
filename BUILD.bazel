@@ -1,0 +1,30 @@
+load("@rules_pkg//pkg:install.bzl", "pkg_install")
+load("@rules_pkg//pkg:mappings.bzl", "pkg_filegroup")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files([
+    "LICENSE",
+    "README.md",
+])
+
+filegroup(
+    name = "runtime_data",
+    srcs = [
+    ],
+)
+
+pkg_filegroup(
+    name = "package_files",
+    srcs = [
+        "//modules/lidar_fusion:package_files",
+        "//modules/lidar_object_detection:package_files",
+        "//modules/lidar_semantic_segmentation:package_files",
+    ],
+)
+
+pkg_install(
+    name = "install_dir",
+    srcs = [":package_files"],
+    tags = ["manual"],
+)
