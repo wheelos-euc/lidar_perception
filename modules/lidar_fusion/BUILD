@@ -1,3 +1,4 @@
+load("@core//runtime:runtime.bzl", "runtime_module")
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 load("@rules_pkg//pkg:install.bzl", "pkg_install")
 load("@rules_pkg//pkg:mappings.bzl", "pkg_attributes", "pkg_filegroup", "pkg_files", "strip_prefix")
@@ -363,4 +364,15 @@ pkg_install(
     name = "install_dir",
     srcs = [":package_files"],
     tags = ["manual"],
+)
+
+runtime_module(
+    name = "module",
+    components = [":liblidar_fusion_component.so"],
+    files = {
+        "conf/lidar_fusion.pb.txt": "conf/lidar_fusion/lidar_fusion.pb.txt",
+        "runtime/lidar_fusion.dag": "dag/lidar_fusion/lidar_fusion.dag",
+        "runtime/lidar_fusion.launch": "launch/lidar_fusion/lidar_fusion.launch",
+    },
+    module_name = "lidar_fusion",
 )
